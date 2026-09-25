@@ -54,3 +54,26 @@ Evidencia (no valen capturas de tutorial): `terraform validate` de ambos módulo
 ## 6. Decisión (resumen del ADR)
 
 Se adopta **A**: $0 sin ruptura de precio, funciona sin internet ni cuentas externas, reversión en segundos y el lab siempre está disponible. **B** queda como plan B si el lab cae. Detalle en `ADR.md`.
+
+## 7. Evidencia de ejecución (salidas reales, 2026-09-25)
+
+Terraform instalado: `Terraform v1.9.8 on windows_amd64` (`terraform version`).
+
+```text
+# terraform-lab: init + validate + fmt
+Terraform has been successfully initialized!
+Success! The configuration is valid.
+(fmt -check: limpio, sin diferencias)
+
+# terraform-cloud: init + validate + fmt
+Terraform has been successfully initialized!
+Success! The configuration is valid.
+(fmt -check: limpio, sin diferencias)
+
+# Costos (node scripts/estimar-costos.mjs --despliegues-mes 30)
+A Lab (Docker+nginx): $0/mes. Sin ruptura de precio.
+B gratuito: despliegues=30/mes builds_incluidos=500 cabe=SI
+RUPTURA_FREE: a x16.7 (~500 despliegues/mes). Luego plan pago o espaciar despliegues.
+```
+
+> `terraform plan` / `apply` de la alternativa A y el `curl` se ejecutan en el laboratorio (esta máquina no tiene Docker Engine: el `plan` devuelve `Error pinging Docker server`, resultado esperado y documentado). El `plan` de la alternativa B requiere el token de cuenta gratuita.
