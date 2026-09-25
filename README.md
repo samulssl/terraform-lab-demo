@@ -77,3 +77,17 @@ RUPTURA_FREE: a x16.7 (~500 despliegues/mes). Luego plan pago o espaciar desplie
 ```
 
 > `terraform plan` / `apply` de la alternativa A y el `curl` se ejecutan en el laboratorio (esta máquina no tiene Docker Engine: el `plan` devuelve `Error pinging Docker server`, resultado esperado y documentado). El `plan` de la alternativa B requiere el token de cuenta gratuita.
+
+> Ejecución real en máquina Ubuntu con Docker (provider actualizado a 3.9, socket Linux):
+>
+> ```text
+> Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+> Outputs:
+> pieza = "sitio-portafolio"
+> reversion = "Restaurar la versión anterior de pieza/ y: terraform apply -auto-approve"
+> url = "http://localhost:8080/"
+> <!doctype html><html lang="es"><head><meta charset="utf-8">
+> <title>sitio-portafolio</title></head>
+> <body><h1>sitio-portafolio OK</h1>
+> <p>Pieza de ejemplo para el taller de despliegue.</p></body></html>
+> ```
