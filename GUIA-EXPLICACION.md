@@ -15,3 +15,7 @@ Yo trabajo siempre en el mismo orden. Con `init` preparo el terreno descargando 
 ## Dónde corre cada cosa
 
 En mi casa hice todo lo que no necesita Docker: validé mi código, calculé mis costos y subí mi proyecto a GitHub. Mi despliegue de verdad —mi contenedor nginx creado por `terraform apply`— lo corrí en una máquina Ubuntu con Docker, donde también verifiqué mi página con `curl` y en el navegador. Y GitHub es mi vitrina: guarda mi código para que el profesor lo lea, pero no ejecuta nada; subir archivos no es desplegar.
+
+## Lo que hice en la página de Terraform (HCP), documentado
+
+Yo conecté mi repo de GitHub con HCP Terraform (app.terraform.io) en un workspace llamado `terraform-lab-demo`. Ahí corrí un `plan` que terminó en verde (`Plan finished`, 1 to add, Terraform 1.16.4) y luego un `apply` que también terminó en verde (`Apply finished`, 1 created, con su state version guardada). Lo que se creó fue únicamente el recurso `random_pet.api_server` con el nombre `premium-anchovy`: un texto aleatorio, no mi sitio. Esos runs en verde me sirvieron para demostrar que mi tubería GitHub-HCP funciona y que sé leer un plan, unos outputs y un state desde la web, pero como aplicaban un código equivocado, revertí esos cambios y dejé el código correcto del despliegue Docker. La lección que me quedó: un run verde solo dice que el código corre, no que el código sea el correcto.
