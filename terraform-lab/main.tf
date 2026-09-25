@@ -1,24 +1,18 @@
-# Alternativa A — laboratorio: nginx sirve la carpeta pieza/ (solo lectura).
-resource "docker_image" "web" {
-  name         = "nginx:alpine"
-  keep_locally = true
+terraform {
+  required_providers {
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0"
+    }
+  }
 }
 
-resource "docker_container" "web" {
-  name  = var.project_name
-  image = docker_image.web.image_id
+resource "random_pet" "api_server" {
+  length    = 2
+  separator = "-"
+}
 
-  ports {
-    internal = 80
-    external = var.host_port
-  }
-
-  volumes {
-    host_path      = abspath("${path.module}/../pieza")
-    container_path = "/usr/share/nginx/html"
-    read_only      = true
-  }
-
-  memory  = 256
-  restart = "unless-stopped"
+output "api_server_name" {
+  value       = "api-orders-${random_pet.api_server.id}"
+  description = "Nombre unico asignado al contenedor de la API"
 }
