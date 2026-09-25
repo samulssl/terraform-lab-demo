@@ -1,18 +1,24 @@
-terraform {
-  required_providers {
-    random = {
-      source  = "hashicorp/random"
-      version = "~> 3.0"
-    }
+# Alternativa A — laboratorio: nginx sirve la carpeta pieza/ (solo lectura).
+resource "docker_image" "web" {
+  name         = "nginx:alpine"
+  keep_locally = true
+}
+
+resource "docker_container" "web" {
+  name  = var.project_name
+  image = docker_image.web.image_id
+
+  ports {
+    internal = 80
+    external = var.host_port
   }
-}
 
-resource "random_pet" "api_server" {
-  length    = 2
-  separator = "-"
-}
+  volumes {
+    host_path      = abspath("${path.module}/../pieza")
+    container_path = "/usr/share/nginx/html"
+    read_only      = true
+  }
 
-output "api_server_name" {
-  value       = "api-orders-${random_pet.api_server.id}"
-  description = "Nombre unico asignado al contenedor de la API"
+  memory  = 256
+  restart = "unless-stopped"
 }
