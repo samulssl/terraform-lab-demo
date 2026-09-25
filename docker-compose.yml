@@ -1,0 +1,7 @@
+# Plan B local / demo: levanta la pieza sin Terraform (un solo comando).
+services:
+  sitio:
+    build: .
+    ports:
+      - "8080:80"
+    restart: unless-stopped
